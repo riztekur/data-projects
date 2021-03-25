@@ -5,10 +5,13 @@ import matplotlib.pyplot as plt
 from sklearn import datasets
 from sklearn.ensemble import RandomForestRegressor
 
-st.write("""
-# Boston House Price Prediction App
+st.set_page_config(page_title='Boston House Price Prediction', layout='wide')
+st.set_option('deprecation.showPyplotGlobalUse', False)
 
-This app predicts the **Boston House Price**!
+st.write("""
+# Boston House Price Prediction
+
+Made with **streamlit** by [riztekur](https://github.com/riztekur)
 """)
 st.write('---')
 
@@ -19,7 +22,7 @@ Y = pd.DataFrame(boston.target, columns=["MEDV"])
 
 # Sidebar
 # Header of Specify Input Parameters
-st.sidebar.header('Specify Input Parameters')
+st.sidebar.header('Input Parameters')
 
 def user_input_features():
     CRIM = st.sidebar.slider('CRIM', X.CRIM.min(), X.CRIM.max(), X.CRIM.mean())
@@ -72,15 +75,17 @@ st.write('---')
 
 # Explaining the model's predictions using SHAP values
 # https://github.com/slundberg/shap
+st.header('Feature Importance')
 explainer = shap.TreeExplainer(model)
 shap_values = explainer.shap_values(X)
 
-st.header('Feature Importance')
-plt.title('Feature importance based on SHAP values')
-shap.summary_plot(shap_values, X)
-st.pyplot(bbox_inches='tight')
-st.write('---')
+col1, col2 = st.beta_columns(2)
+with col1:
+    plt.title('SHAP values')
+    shap.summary_plot(shap_values, X)
+    st.pyplot(bbox_inches='tight')
 
-plt.title('Feature importance based on SHAP values (Bar)')
-shap.summary_plot(shap_values, X, plot_type="bar")
-st.pyplot(bbox_inches='tight')
+with col2:
+    plt.title('SHAP values')
+    shap.summary_plot(shap_values, X, plot_type="bar")
+    st.pyplot(bbox_inches='tight')
