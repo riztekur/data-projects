@@ -10,7 +10,7 @@ st.set_page_config(page_title="Iris Flower Classification", layout="wide")
 
 st.write("""
 # Simple Iris Flower Prediction App
-Made with **streamlit** by [riztekur](https://linkedin.com/in/rizkitk)
+Made with **streamlit** by [riztekur](https://github.com/riztekur)
 """)
 
 st.sidebar.header('Set Features')
